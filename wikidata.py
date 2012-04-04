@@ -66,5 +66,9 @@ class _API:
 
 	def removeAlias(self, iID, language, alias):
 		pass
+
+	def autocomplete(self, language, fragment, hints=None):
+		pass
+
 api = _API()
 config = _Config('config.py')
