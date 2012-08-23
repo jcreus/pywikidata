@@ -28,13 +28,15 @@ class _API:
     def getItemByInterwiki(self, site, title):
         return self.getItemsByInterwiki([site], [title])[0]
 
-    def save(self, items, comment=u''):
+    def save(self, items, comment=None):
         if type(items) != list:
             items = [items]
         for item in items:
             params = {"action":"wbsetitem", "clear": ""}
             if item.id:
                 params["id"] = item.id
+            if comment:
+                params["summary"] = comment
             data = {"sitelinks": item.sitelinks, "aliases": item.aliases, "labels": item.labels, "descriptions": item.descriptions}
             params["data"] = json.dumps(data, ensure_ascii=False)
             newdata = self.request.postWithToken(params)
