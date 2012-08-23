@@ -22,7 +22,7 @@ item = wikidata.api.getItemById(1) # getItemsById also works
 Modify an item
 ~~~~~~~~~~~~~~
 """
-item.sitelinks["cawiki"] = u"Sant Cugat del Vallès"
+item.sitelinks["cawiki"] = u"Barcelona"
 item.sitelinks["eswiki"] = "Barna"
 
 wikidata.api.save(item, 'Edit summary')
