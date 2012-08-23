@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import json
+
 from request import RequestHandler
 from item import Item
 import errors
 
-import json
-
-""" Internal API class. Use api object instead. """
 class _API:
+    """ Internal API class. Use api object instead. """
+
     def __init__(self, config):
         self.request = RequestHandler(config)
         self.config = config

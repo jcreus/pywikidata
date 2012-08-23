@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-"""
-Private class. Use the config object instead, which is an instance of this class.
-"""
 class _Config:
+    """Internal, reads configuration from a file. Use the config object instead."""
+
     config = {}
     def __init__(self, uri):
         self.configFile = uri

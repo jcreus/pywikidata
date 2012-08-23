@@ -6,6 +6,7 @@ import json
 import cookielib
 
 class RequestHandler:
+
     def __init__(self, config):
         self.config = config
         self._cj = cookielib.CookieJar()
