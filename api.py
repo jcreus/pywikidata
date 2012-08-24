@@ -22,8 +22,16 @@ class _API:
     def getItemById(self, iid):
         return self.getItemsById([iid])[0]
 
-    def getItemsByInterwikis(self, sites=[], titles=[]):
-        pass
+    def getItemsByInterwiki(self, arg1=[], arg2=[]):
+        if arg1 and not arg2: # then arg1 is [[site,title],[site,title]]
+            sites = [x[0] for x in arg1]
+            titles = [x[1] for x in arg1]
+        else:
+            sites = arg1
+            titles = arg2
+        resp = self.request.get({"action":"wbgetitems", "sites": "|".join(sites), "titles": "|".join(titles)})
+        items = self._createItemCollection(resp["items"])
+        return items 
 
     def getItemByInterwiki(self, site, title):
         return self.getItemsByInterwiki([site], [title])[0]
