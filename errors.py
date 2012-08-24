@@ -5,3 +5,12 @@ class ConfigurationError(Exception):
 
 class ItemIDMismatch(Exception):
     pass
+
+class PermissionError(Exception):
+    pass
+
+class UnknownError(Exception):
+    pass
+
+class ItemNotFoundError(Exception):
+    pass
