@@ -33,12 +33,16 @@ class RequestHandler:
 
     def get(self, params):
         params["format"] = "json"
+        if self.config["lang"]:
+            params["uselang"] = self.config["lang"]
         a = urllib2.Request(self.config["api"]+"?"+self.encode(params))
         content = urllib2.urlopen(a).read()
         return json.loads(content)
 
     def post(self, params):
         params["format"] = "json"
+        if self.config["lang"]:
+            params["uselang"] = self.config["lang"]
         a = urllib2.Request(self.config["api"], self.encode(params))
         content = self._opener.open(a).read()
         return json.loads(content)
