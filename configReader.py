@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-class _Config:
+class Config:
     """Internal, reads configuration from a file. Use the config object instead."""
 
     config = {}

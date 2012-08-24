@@ -19,6 +19,7 @@ class RequestHandler:
             self.login(config["username"], config["password"])
     
     def login(self, user, password):
+        """Logins with arguments user and password."""
         def log(self, user, passwd, token=None):
             data = {'action': 'login', 'lgname': user, 'lgpassword': passwd}
             if token:
@@ -34,6 +35,7 @@ class RequestHandler:
         return log(self, user, password)
 
     def get(self, params):
+        """Issues a GET API request and returns a dictionary, or raises an error if appropiate."""
         params["format"] = "json"
         if self.config["lang"]:
             params["uselang"] = self.config["lang"]
@@ -44,6 +46,7 @@ class RequestHandler:
         return js
 
     def post(self, params):
+        """Issues a POST API request and returns a dictionary, or raises an error if appropiate."""
         params["format"] = "json"
         if self.config["lang"]:
             params["uselang"] = self.config["lang"]
@@ -60,11 +63,13 @@ class RequestHandler:
         return urlencode(p2)
 
     def postWithToken(self, params):
+        """Issues a POST API request (requesting a token beforehand) and returns a dictionary, or raises an error if appropiate."""
         token = self.getToken(params["action"])
         params["token"] = token
         return self.post(params)
 
     def getToken(self, action):
+        """Returns a token."""
         return self.post({"action": action, "format": "json", "gettoken": ""})[action]["itemtoken"]
 
     def _checkErrors(self, data):

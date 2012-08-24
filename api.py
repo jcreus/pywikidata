@@ -6,23 +6,26 @@ from request import RequestHandler
 from item import Item
 import errors
 
-class _API:
-    """ Internal API class. Use api object instead. """
+class API:
 
     def __init__(self, config):
+        """Takes a configReader.Config object as an argument."""
         self.request = RequestHandler(config)
         self.config = config
 
     def getItemsById(self, ids=[]):
+        """Returns an item collection. Takes a list of ids as an argument."""
         ids = [str(x) for x in ids]
         resp = self.request.get({"action":"wbgetitems", "ids": "|".join(ids)})
         items = self._createItemCollection(resp["items"])
         return items
 
     def getItemById(self, iid):
+        """Returns the item defined by the argument."""
         return self.getItemsById([iid])[0]
 
     def getItemsByInterwiki(self, arg1=[], arg2=[]):
+        """Returns an item collection, coming from either a list of sites as the first argument and a list of titles as the second argument, or a list of tuples (site, title) as the only argument."""
         if arg1 and not arg2: # then arg1 is [[site,title],[site,title]]
             sites = [x[0] for x in arg1]
             titles = [x[1] for x in arg1]
@@ -34,9 +37,11 @@ class _API:
         return items 
 
     def getItemByInterwiki(self, site, title):
+        """Returns an item which has the requested site and title."""
         return self.getItemsByInterwiki([site], [title])[0]
 
     def save(self, items, comment=None):
+        """Saves a list of items or a single item, with an optional second parameter being the summary."""
         if type(items) != list:
             items = [items]
         for item in items:
