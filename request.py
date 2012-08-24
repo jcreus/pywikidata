@@ -5,6 +5,8 @@ from urllib import urlencode
 import json
 import cookielib
 
+import errors
+
 class RequestHandler:
 
     def __init__(self, config):
@@ -37,7 +39,9 @@ class RequestHandler:
             params["uselang"] = self.config["lang"]
         a = urllib2.Request(self.config["api"]+"?"+self.encode(params))
         content = urllib2.urlopen(a).read()
-        return json.loads(content)
+        js = json.loads(content)
+        self._checkErrors(js)
+        return js
 
     def post(self, params):
         params["format"] = "json"
@@ -45,7 +49,9 @@ class RequestHandler:
             params["uselang"] = self.config["lang"]
         a = urllib2.Request(self.config["api"], self.encode(params))
         content = self._opener.open(a).read()
-        return json.loads(content)
+        js = json.loads(content)
+        self._checkErrors(js)
+        return js
 
     def encode(self, params):
         p2 = {}
@@ -60,3 +66,16 @@ class RequestHandler:
 
     def getToken(self, action):
         return self.post({"action": action, "format": "json", "gettoken": ""})[action]["itemtoken"]
+
+    def _checkErrors(self, data):
+        if not "error" in data:
+            return
+        code = data["error"]["code"]
+        error = None
+        if code == "cant-edit":
+            error = errors.PermissionError
+        elif code == "no-such-item-id":
+            error = errors.ItemNotFoundError
+        else:
+            error = errors.UnknownError
+        raise error(data["error"]["info"])

@@ -48,18 +48,7 @@ class _API:
             data = {"sitelinks": item.sitelinks, "aliases": item.aliases, "labels": item.labels, "descriptions": item.descriptions}
             params["data"] = json.dumps(data, ensure_ascii=False)
             newdata = self.request.postWithToken(params)
-            if "error" in newdata:
-                code = newdata["error"]["code"]
-                error = None
-                if code == "cant-edit":
-                    error = errors.PermissionError
-                elif code == "no-such-item-id":
-                    error = errors.ItemNotFoundError
-                else:
-                    error = errors.UnknownError
-                raise error(newdata["error"]["info"])
-            else:
-                self._createItem(newdata["item"], item)
+            self._createItem(newdata["item"], item)
 
     def _createItemCollection(self, data):
         items = []
