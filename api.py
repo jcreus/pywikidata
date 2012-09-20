@@ -51,9 +51,24 @@ class API:
             if comment:
                 params["summary"] = comment
             data = {"sitelinks": item.sitelinks, "aliases": item.aliases, "labels": item.labels, "descriptions": item.descriptions}
+            for d in data:
+                data[d] = self._saveFormat(data[d], d)
             params["data"] = json.dumps(data, ensure_ascii=False)
             newdata = self.request.postWithToken(params)
             self._createItem(newdata["item"], item)
+
+    def _saveFormat(self, data, typ):
+        arr = []
+        vals = ["value","language"]
+        if typ == "sitelinks":
+            vals = ["title", "site"]
+        for d in data:
+            if typ == "aliases":
+                for value in data[d]:
+                    arr.append({vals[0]:value, vals[1]:d})
+            else:
+                arr.append({vals[0]:data[d], vals[1]:d})
+        return arr
 
     def _createItemCollection(self, data):
         items = []
