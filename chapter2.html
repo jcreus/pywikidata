@@ -1,0 +1,220 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Items &mdash; pywikidata 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pywikidata 0.1 documentation" href="index.html" />
+    <link rel="next" title="Advanced: custom API and Config instances" href="chapter3.html" />
+    <link rel="prev" title="The pywikidata manual" href="chapter1.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="chapter3.html" title="Advanced: custom API and Config instances"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="chapter1.html" title="The pywikidata manual"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pywikidata 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="items">
+<h1>Items<a class="headerlink" href="#items" title="Permalink to this headline">¶</a></h1>
+<p>Items are a core part of pywikidata. They provide an abstraction to Wikidata items in the form of a class, Item(). Instead of dealing with JSON directly, it allows to change properties of the class.</p>
+<p>Being a simple object (kind of a C struct), they can be easily Pickled to store them into files. Other parts of pywikidata will allow to work with them, and most functions use them.</p>
+<div class="section" id="initializing-an-item">
+<h2>Initializing an item<a class="headerlink" href="#initializing-an-item" title="Permalink to this headline">¶</a></h2>
+<p>To create a new item, the Item constructor can be used. It allows four parameters.</p>
+<p>Obviously, however, one can create an empty Item and then set stuff via its properties.</p>
+<p>Items have another property, <em>id</em>, which shouldn&#8217;t generally be set manually. In case it&#8217;s not defined when the item is saved, a new item will be created, and the item object will have the new id available at Item.id. When items are fetched by id, for example, the property is already defined.</p>
+</div>
+<div class="section" id="fetching-items">
+<h2>Fetching items<a class="headerlink" href="#fetching-items" title="Permalink to this headline">¶</a></h2>
+<p>Pywikidata provides various ways to get an item. These are outlined below; you can see the full reference here at the last section of this manual.</p>
+<dl class="function">
+<dt id="wikidata.api.getItemById">
+<tt class="descclassname">wikidata.api.</tt><tt class="descname">getItemById</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#wikidata.api.getItemById" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="wikidata.api.getItemsById">
+<tt class="descclassname">wikidata.api.</tt><tt class="descname">getItemsById</tt><big>(</big><em>ids</em><big>)</big><a class="headerlink" href="#wikidata.api.getItemsById" title="Permalink to this definition">¶</a></dt>
+<dd><p>It returns either an item or a collection of items.</p>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">wikidata</span>
+
+<span class="n">item</span> <span class="o">=</span> <span class="n">wikidata</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">getItemById</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">wikidata</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">getItemsById</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">42</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>You can also select by interwikis.</p>
+<dl class="function">
+<dt id="wikidata.api.getItemByInterwiki">
+<tt class="descclassname">wikidata.api.</tt><tt class="descname">getItemByInterwiki</tt><big>(</big><em>site</em>, <em>title</em><big>)</big><a class="headerlink" href="#wikidata.api.getItemByInterwiki" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="wikidata.api.getItemsByInterwiki">
+<tt class="descclassname">wikidata.api.</tt><tt class="descname">getItemsByInterwiki</tt><big>(</big><em>sites</em>, <em>titles)</em><big>)</big><a class="headerlink" href="#wikidata.api.getItemsByInterwiki" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">wikidata.api.</tt><tt class="descname">getItemsByInterwiki</tt><big>(</big><em>sitesandtitles</em><big>)</big></dt>
+<dd><p>It blah blah blah</p>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">wikidata</span>
+
+<span class="n">item</span> <span class="o">=</span> <span class="n">wikidata</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">getItemByInterwiki</span><span class="p">(</span><span class="s">&quot;cawiki&quot;</span><span class="p">,</span><span class="s">&quot;Catalunya&quot;</span><span class="p">)</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">wikidata</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">getItemsById</span><span class="p">([</span><span class="s">&quot;cawiki&quot;</span><span class="p">,</span><span class="s">&quot;enwiki&quot;</span><span class="p">],[</span><span class="s">&quot;Catalunya&quot;</span><span class="p">,</span><span class="s">&quot;Barcelona&quot;</span><span class="p">])</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">wikidata</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">getItemsById</span><span class="p">([[</span><span class="s">&quot;cawiki&quot;</span><span class="p">,</span><span class="s">&quot;Catalunya&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s">&quot;enwiki&quot;</span><span class="p">,</span><span class="s">&quot;Barcelona&quot;</span><span class="p">]])</span> <span class="c"># Equivalent to above</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="modifying-items">
+<h2>Modifying items<a class="headerlink" href="#modifying-items" title="Permalink to this headline">¶</a></h2>
+<p>Now items can be modified. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">wikidata</span>
+
+<span class="n">item</span> <span class="o">=</span> <span class="n">wikidata</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">getItemByInterwiki</span><span class="p">(</span><span class="s">&quot;cawiki&quot;</span><span class="p">,</span><span class="s">&quot;Catalunya&quot;</span><span class="p">)</span>
+<span class="n">item</span><span class="o">.</span><span class="n">sitelinks</span><span class="p">[</span><span class="s">&quot;enwiki&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Catalonia&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="saving-items">
+<h2>Saving items<a class="headerlink" href="#saving-items" title="Permalink to this headline">¶</a></h2>
+<p>Items can be saved via <tt class="docutils literal"><span class="pre">wikidata.api.save</span></tt>.</p>
+<dl class="function">
+<dt id="wikidata.api.save">
+<tt class="descclassname">wikidata.api.</tt><tt class="descname">save</tt><big>(</big><em>item</em>, <em>summary=&quot;&quot;</em><big>)</big><a class="headerlink" href="#wikidata.api.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">wikidata.api.</tt><tt class="descname">save</tt><big>(</big><em>items</em>, <em>summary=&quot;&quot;</em><big>)</big></dt>
+<dd></dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">wikidata</span>
+
+<span class="n">item</span> <span class="o">=</span> <span class="n">wikidata</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">getItemByInterwiki</span><span class="p">(</span><span class="s">&quot;cawiki&quot;</span><span class="p">,</span><span class="s">&quot;Catalunya&quot;</span><span class="p">)</span>
+<span class="n">item</span><span class="o">.</span><span class="n">sitelinks</span><span class="p">[</span><span class="s">&quot;enwiki&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Catalonia&quot;</span>
+<span class="n">wikidata</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s">&quot;Edit summary&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">wikidata</span>
+
+<span class="n">item</span> <span class="o">=</span> <span class="n">wikidata</span><span class="o">.</span><span class="n">Item</span><span class="p">()</span>
+<span class="n">wikidata</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s">&quot;Edit summary&quot;</span><span class="p">)</span>
+<span class="c"># Now item.id contains the assigned id. Redirects in sitelinks will be also here resolved.</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Items</a><ul>
+<li><a class="reference internal" href="#initializing-an-item">Initializing an item</a></li>
+<li><a class="reference internal" href="#fetching-items">Fetching items</a></li>
+<li><a class="reference internal" href="#modifying-items">Modifying items</a></li>
+<li><a class="reference internal" href="#saving-items">Saving items</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="chapter1.html"
+                        title="previous chapter">The pywikidata manual</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="chapter3.html"
+                        title="next chapter">Advanced: custom API and Config instances</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/chapter2.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="chapter3.html" title="Advanced: custom API and Config instances"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="chapter1.html" title="The pywikidata manual"
+             >previous</a> |</li>
+        <li><a href="index.html">pywikidata 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Joan Creus.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

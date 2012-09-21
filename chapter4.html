@@ -1,0 +1,206 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Documentation for each module &mdash; pywikidata 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pywikidata 0.1 documentation" href="index.html" />
+    <link rel="prev" title="Advanced: custom API and Config instances" href="chapter3.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="chapter3.html" title="Advanced: custom API and Config instances"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pywikidata 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="documentation-for-each-module">
+<h1>Documentation for each module<a class="headerlink" href="#documentation-for-each-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-api">
+<span id="api-py"></span><h2>api.py<a class="headerlink" href="#module-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="api.API">
+<em class="property">class </em><tt class="descclassname">api.</tt><tt class="descname">API</tt><big>(</big><em>config</em><big>)</big><a class="headerlink" href="#api.API" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="api.API.getItemById">
+<tt class="descname">getItemById</tt><big>(</big><em>iid</em><big>)</big><a class="headerlink" href="#api.API.getItemById" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the item defined by the argument.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="api.API.getItemByInterwiki">
+<tt class="descname">getItemByInterwiki</tt><big>(</big><em>site</em>, <em>title</em><big>)</big><a class="headerlink" href="#api.API.getItemByInterwiki" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an item which has the requested site and title.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="api.API.getItemsById">
+<tt class="descname">getItemsById</tt><big>(</big><em>ids=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#api.API.getItemsById" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an item collection. Takes a list of ids as an argument.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="api.API.getItemsByInterwiki">
+<tt class="descname">getItemsByInterwiki</tt><big>(</big><em>arg1=</em><span class="optional">[</span><span class="optional">]</span>, <em>arg2=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#api.API.getItemsByInterwiki" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an item collection, coming from either a list of sites as the first argument and a list of titles as the second argument, or a list of tuples (site, title) as the only argument.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="api.API.save">
+<tt class="descname">save</tt><big>(</big><em>items</em>, <em>comment=None</em><big>)</big><a class="headerlink" href="#api.API.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a list of items or a single item, with an optional second parameter being the summary.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="item-py">
+<h2>item.py<a class="headerlink" href="#item-py" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It can also be found at wikidata.Item, as a shortcut.</p>
+</div>
+<span class="target" id="module-item"></span><dl class="class">
+<dt id="item.Item">
+<em class="property">class </em><tt class="descclassname">item.</tt><tt class="descname">Item</tt><big>(</big><em>sitelinks={}</em>, <em>aliases={}</em>, <em>labels={}</em>, <em>descriptions={}</em><big>)</big><a class="headerlink" href="#item.Item" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-request">
+<span id="request-py"></span><h2>request.py<a class="headerlink" href="#module-request" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="request.RequestHandler">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">RequestHandler</tt><big>(</big><em>config</em><big>)</big><a class="headerlink" href="#request.RequestHandler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="request.RequestHandler.get">
+<tt class="descname">get</tt><big>(</big><em>params</em><big>)</big><a class="headerlink" href="#request.RequestHandler.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Issues a GET API request and returns a dictionary, or raises an error if appropiate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="request.RequestHandler.getToken">
+<tt class="descname">getToken</tt><big>(</big><em>action</em><big>)</big><a class="headerlink" href="#request.RequestHandler.getToken" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a token.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="request.RequestHandler.login">
+<tt class="descname">login</tt><big>(</big><em>user</em>, <em>password</em><big>)</big><a class="headerlink" href="#request.RequestHandler.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logins with arguments user and password.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="request.RequestHandler.post">
+<tt class="descname">post</tt><big>(</big><em>params</em><big>)</big><a class="headerlink" href="#request.RequestHandler.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Issues a POST API request and returns a dictionary, or raises an error if appropiate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="request.RequestHandler.postWithToken">
+<tt class="descname">postWithToken</tt><big>(</big><em>params</em><big>)</big><a class="headerlink" href="#request.RequestHandler.postWithToken" title="Permalink to this definition">¶</a></dt>
+<dd><p>Issues a POST API request (requesting a token beforehand) and returns a dictionary, or raises an error if appropiate.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Documentation for each module</a><ul>
+<li><a class="reference internal" href="#module-api">api.py</a></li>
+<li><a class="reference internal" href="#item-py">item.py</a></li>
+<li><a class="reference internal" href="#module-request">request.py</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="chapter3.html"
+                        title="previous chapter">Advanced: custom API and Config instances</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/chapter4.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="chapter3.html" title="Advanced: custom API and Config instances"
+             >previous</a> |</li>
+        <li><a href="index.html">pywikidata 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Joan Creus.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
