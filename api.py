@@ -17,7 +17,7 @@ class API:
         """Returns an item collection. Takes a list of ids as an argument."""
         ids = [str(x) for x in ids]
         resp = self.request.get({"action":"wbgetitems", "ids": "|".join(ids)})
-        items = self._createItemCollection(resp["items"])
+        items = self._createItemCollection(resp["entities"])
         return items
 
     def getItemById(self, iid):
@@ -33,8 +33,8 @@ class API:
             sites = arg1
             titles = arg2
         resp = self.request.get({"action":"wbgetitems", "sites": "|".join(sites), "titles": "|".join(titles)})
-        items = self._createItemCollection(resp["items"])
-        return items 
+        items = self._createItemCollection(resp["entities"])
+        return items
 
     def getItemByInterwiki(self, site, title):
         """Returns an item which has the requested site and title."""
@@ -50,12 +50,14 @@ class API:
                 params["id"] = item.id
             if comment:
                 params["summary"] = comment
+            if self.config["botflag"]:
+                params["botflag"] = "1"
             data = {"sitelinks": item.sitelinks, "aliases": item.aliases, "labels": item.labels, "descriptions": item.descriptions}
             for d in data:
                 data[d] = self._saveFormat(data[d], d)
             params["data"] = json.dumps(data, ensure_ascii=False)
             newdata = self.request.postWithToken(params)
-            self._createItem(newdata["item"], item)
+            self._createItem(newdata["entity"], item)
 
     def _saveFormat(self, data, typ):
         arr = []
