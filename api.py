@@ -17,7 +17,7 @@ class API:
         """Returns an item collection. Takes a list of ids as an argument."""
         ids = [str(x) for x in ids]
         resp = self.request.get({"action":"wbgetitems", "ids": "|".join(ids)})
-        items = self._createItemCollection(resp["items"])
+        items = self._createItemCollection(resp["entities"])
         return items
 
     def getItemById(self, iid):
@@ -50,7 +50,7 @@ class API:
                 params["id"] = item.id
             if comment:
                 params["summary"] = comment
-            if config.botflag:
+            if self.config["botflag"]:
                 params["botflag"] = "1"
             data = {"sitelinks": item.sitelinks, "aliases": item.aliases, "labels": item.labels, "descriptions": item.descriptions}
             for d in data:
