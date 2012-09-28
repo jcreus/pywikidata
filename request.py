@@ -15,6 +15,7 @@ class RequestHandler:
         self._opener = urllib2.build_opener(
                 urllib2.HTTPCookieProcessor(self._cj)
         )
+        self._editToken = None
         if config["username"] and config["password"]:
             self.login(config["username"], config["password"])
     
@@ -26,6 +27,8 @@ class RequestHandler:
                 data['lgtoken'] = token
             result = self.post(data)
             if result['login']['result'] == 'Success':
+                # Ok, we've logged in. Now get an edit token (only needed one time).
+                self._editToken = self.getToken()
                 return True
             elif result['login']['result'] == 'NeedToken' and not token:
                 return log(self, user, passwd, result['login']['token'])
@@ -64,13 +67,12 @@ class RequestHandler:
 
     def postWithToken(self, params):
         """Issues a POST API request (requesting a token beforehand) and returns a dictionary, or raises an error if appropiate."""
-        token = self.getToken(params["action"])
-        params["token"] = token
+        params["token"] = self._editToken
         return self.post(params)
 
-    def getToken(self, action):
+    def getToken(self):
         """Returns a token."""
-        return self.post({"action": action, "format": "json", "gettoken": ""})[action]["itemtoken"]
+        return self.post({"action": "tokens", "format": "json", "type": "edit"})["tokens"]["edittoken"]
 
     def _checkErrors(self, data):
         if not "error" in data:

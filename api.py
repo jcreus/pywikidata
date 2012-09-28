@@ -33,8 +33,8 @@ class API:
             sites = arg1
             titles = arg2
         resp = self.request.get({"action":"wbgetitems", "sites": "|".join(sites), "titles": "|".join(titles)})
-        items = self._createItemCollection(resp["items"])
-        return items 
+        items = self._createItemCollection(resp["entities"])
+        return items
 
     def getItemByInterwiki(self, site, title):
         """Returns an item which has the requested site and title."""
@@ -57,7 +57,7 @@ class API:
                 data[d] = self._saveFormat(data[d], d)
             params["data"] = json.dumps(data, ensure_ascii=False)
             newdata = self.request.postWithToken(params)
-            self._createItem(newdata["item"], item)
+            self._createItem(newdata["entity"], item)
 
     def _saveFormat(self, data, typ):
         arr = []
