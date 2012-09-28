@@ -50,6 +50,8 @@ class API:
                 params["id"] = item.id
             if comment:
                 params["summary"] = comment
+            if config.botflag:
+                params["botflag"] = "1"
             data = {"sitelinks": item.sitelinks, "aliases": item.aliases, "labels": item.labels, "descriptions": item.descriptions}
             for d in data:
                 data[d] = self._saveFormat(data[d], d)
