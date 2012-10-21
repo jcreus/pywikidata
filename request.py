@@ -40,8 +40,6 @@ class RequestHandler:
     def get(self, params):
         """Issues a GET API request and returns a dictionary, or raises an error if appropiate."""
         params["format"] = "json"
-        if self.config["lang"]:
-            params["uselang"] = self.config["lang"]
         a = urllib2.Request(self.config["api"]+"?"+self.encode(params))
         content = urllib2.urlopen(a).read()
         js = json.loads(content)
@@ -51,8 +49,6 @@ class RequestHandler:
     def post(self, params):
         """Issues a POST API request and returns a dictionary, or raises an error if appropiate."""
         params["format"] = "json"
-        if self.config["lang"]:
-            params["uselang"] = self.config["lang"]
         a = urllib2.Request(self.config["api"], self.encode(params))
         content = self._opener.open(a).read()
         js = json.loads(content)
