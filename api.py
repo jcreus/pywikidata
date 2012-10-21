@@ -16,7 +16,7 @@ class API:
     def getItemsById(self, ids=[]):
         """Returns an item collection. Takes a list of ids as an argument."""
         ids = [str(x) for x in ids]
-        resp = self.request.get({"action":"wbgetitems", "ids": "|".join(ids)})
+        resp = self.request.get({"action":"wbgetentities", "ids": "|".join(ids)})
         items = self._createItemCollection(resp["entities"])
         return items
 
@@ -32,7 +32,7 @@ class API:
         else:
             sites = arg1
             titles = arg2
-        resp = self.request.get({"action":"wbgetitems", "sites": "|".join(sites), "titles": "|".join(titles)})
+        resp = self.request.get({"action":"wbgetentities", "sites": "|".join(sites), "titles": "|".join(titles)})
         items = self._createItemCollection(resp["entities"])
         return items
 
@@ -113,5 +113,5 @@ class API:
             return target
         else:
             i = Item(sitelinks, aliases, labels, descriptions)
-            i.id = item["id"]
+            i.id = int(item["id"].replace("q",""))
             return i
